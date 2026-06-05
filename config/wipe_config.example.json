@@ -1,0 +1,256 @@
+{
+  "timezone": "America/Los_Angeles",
+
+  "paths": {
+    "lgsm_config": "/data1/lgsm/config-lgsm/rustserver/rustserver.cfg",
+    "server_cfg": "/data1/serverfiles/server/rustserver/cfg/server.cfg",
+    "state_file": "/opt/rust-autowipe/state/state.json",
+    "backup_dir": "/data1/autowipe-backups"
+  },
+
+  "updates": {
+    "rust_update_enabled": true,
+    "oxide_update_enabled": true,
+    "lgsm_script": "/data1/rustserver"
+  },
+
+  "server_defaults": {
+    "name": "The Rusting Dead | Zombies | Hardcore",
+    "ip_display": "51.222.245.218-28015",
+    "discord": "Discord.gg/YYQbjwfzty",
+    "website": "https://therustingdead.com",
+    "header_image": "https://i.imgur.com/o44bD3y.jpg",
+    "tags": "monthly,hardcore,NA,rsme-139,zombies",
+    "gamemode": "hardcore",
+    "level": "Procedural Map",
+    "max_players": 100,
+    "save_interval": 600,
+    "tickrate": 30
+  },
+
+  "rcon": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 28016,
+    "password": "CHANGE_ME",
+    "command_delay_seconds": 2
+  },
+
+  "post_start": {
+    "wait_seconds_after_start": 180,
+    "server_commands": [
+      "say The server has wiped. Welcome to the new apocalypse.",
+      "server.writecfg"
+    ],
+    "custom_script": {
+      "enabled": false,
+      "path": "/opt/rust-autowipe/scripts/custom_post_wipe.sh"
+    }
+  },
+
+  "wipes": [
+    {
+      "name": "June 2026 Wipe",
+      "wipe_datetime": "2026-06-04T11:05:00-07:00",
+      "next_wipe_datetime": "2026-07-02T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 486053451,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - June 4th, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "July 2026 Wipe",
+      "wipe_datetime": "2026-07-02T11:05:00-07:00",
+      "next_wipe_datetime": "2026-08-06T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 184263922,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - July 2nd, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "August 2026 Wipe",
+      "wipe_datetime": "2026-08-06T11:05:00-07:00",
+      "next_wipe_datetime": "2026-09-03T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 729104388,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - August 6th, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "September 2026 Wipe",
+      "wipe_datetime": "2026-09-03T11:05:00-07:00",
+      "next_wipe_datetime": "2026-10-01T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 932771054,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - September 3rd, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "October 2026 Wipe",
+      "wipe_datetime": "2026-10-01T11:05:00-07:00",
+      "next_wipe_datetime": "2026-11-05T11:05:00-08:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 554201773,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - October 1st, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "November 2026 Wipe",
+      "wipe_datetime": "2026-11-05T11:05:00-08:00",
+      "next_wipe_datetime": "2026-12-03T11:05:00-08:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 817362440,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - November 5th, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "December 2026 Wipe",
+      "wipe_datetime": "2026-12-03T11:05:00-08:00",
+      "next_wipe_datetime": "2027-01-07T11:05:00-08:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 129845706,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - December 3rd, 2026.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "January 2027 Wipe",
+      "wipe_datetime": "2027-01-07T11:05:00-08:00",
+      "next_wipe_datetime": "2027-02-04T11:05:00-08:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 675930221,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - January 7th, 2027.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "February 2027 Wipe",
+      "wipe_datetime": "2027-02-04T11:05:00-08:00",
+      "next_wipe_datetime": "2027-03-04T11:05:00-08:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 390184662,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - February 4th, 2027.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "March 2027 Wipe",
+      "wipe_datetime": "2027-03-04T11:05:00-08:00",
+      "next_wipe_datetime": "2027-04-01T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 908172635,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - March 4th, 2027.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "April 2027 Wipe",
+      "wipe_datetime": "2027-04-01T11:05:00-07:00",
+      "next_wipe_datetime": "2027-05-06T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 271604938,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - April 1st, 2027.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    },
+
+    {
+      "name": "May 2027 Wipe",
+      "wipe_datetime": "2027-05-06T11:05:00-07:00",
+      "next_wipe_datetime": "2027-06-03T11:05:00-07:00",
+      "timezone": "America/Los_Angeles",
+      "map": {
+        "type": "procedural",
+        "seed": 746291805,
+        "worldsize": 4250,
+        "customlevelurl": null
+      },
+      "server_browser": {
+        "header_image": "https://i.imgur.com/o44bD3y.jpg",
+        "description": "Just wiped - May 6th, 2027.\n\nHardcore monthly wipe active.\n\nSurvive against players, zombies, and the elements in The Rusting Dead."
+      }
+    }
+  ]
+}

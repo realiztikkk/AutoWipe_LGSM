@@ -1,0 +1,35 @@
+# Live config
+config/wipe_config.json
+
+# Runtime state
+state/*.json
+
+# Logs
+logs/
+*.log
+
+# Backups
+*.bak
+*.backup
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
