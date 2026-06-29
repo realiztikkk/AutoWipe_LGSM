@@ -63,8 +63,11 @@ LGSM_SCRIPT="$(read_json updates.lgsm_script)"
 ########################################
 
 LOG_DIR="$ROOT_DIR/logs"
+STATE_DIR="$ROOT_DIR/state"
+LOCK_FILE="$STATE_DIR/autowipe.lock"
 
 mkdir -p "$LOG_DIR"
+mkdir -p "$STATE_DIR"
 
 TIMESTAMP="$(TZ="$TIMEZONE" date +"%Y%m%d-%H%M%S")"
 
@@ -128,6 +131,13 @@ update_oxide() {
 ########################################
 
 main() {
+
+    exec 9>"$LOCK_FILE"
+
+    if ! flock -n 9; then
+        log "Another AutoWipe process is already running. Exiting."
+        exit 0
+    fi
 
     log "======================================="
     log "Rust AutoWipe Update-Only Started"

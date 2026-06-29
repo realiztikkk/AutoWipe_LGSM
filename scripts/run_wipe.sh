@@ -96,6 +96,7 @@ mkdir -p "$BACKUP_DIR"
 TIMESTAMP="$(TZ="$TIMEZONE" date +"%Y%m%d-%H%M%S")"
 
 LOG_FILE="$LOG_DIR/wipe-$TIMESTAMP.log"
+LOCK_FILE="$STATE_DIR/autowipe.lock"
 
 ########################################
 # Logging
@@ -218,7 +219,8 @@ apply_wipe_config() {
     log "Applying wipe configuration..."
 
     python3 "$PYTHON_SCRIPT" \
-        --config "$CONFIG_PATH" 2>&1 | tee -a "$LOG_FILE"
+        --config "$CONFIG_PATH" \
+        --skip-state 2>&1 | tee -a "$LOG_FILE"
 
     log "Configuration updated."
 }
@@ -241,6 +243,22 @@ wipe_rust_files() {
     \) -print -delete | tee -a "$LOG_FILE"
 
     log "Rust wipe files deleted."
+}
+
+
+########################################
+# Mark wipe applied
+########################################
+
+mark_wipe_applied() {
+
+    log "Marking wipe as applied..."
+
+    python3 "$PYTHON_SCRIPT" \
+        --config "$CONFIG_PATH" \
+        --mark-applied-only 2>&1 | tee -a "$LOG_FILE"
+
+    log "Wipe state updated."
 }
 
 ########################################
@@ -365,6 +383,13 @@ run_rcon_commands() {
 
 main() {
 
+    exec 9>"$LOCK_FILE"
+
+    if ! flock -n 9; then
+        log "Another AutoWipe process is already running. Exiting."
+        exit 0
+    fi
+
     log "======================================="
     log "Rust AutoWipe Started"
     log "======================================="
@@ -382,6 +407,8 @@ main() {
     apply_wipe_config
 
     wipe_rust_files
+
+    mark_wipe_applied
 
     start_server
 

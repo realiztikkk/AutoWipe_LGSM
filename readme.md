@@ -315,3 +315,17 @@ sudo apt install -y mcrcon
 This tool deletes Rust map/save/player/BP files on configured wipe dates.
 
 Always test with `--dry-run` first.
+## Safety Notes
+
+- Keep your live `config/wipe_config.json`, `state/`, `logs/`, and backup folders out of Git.
+- Test new releases on a copied server or with `--dry-run` before wipe day.
+- Schedule `run_wipe.sh` at or shortly after the configured wipe time. AutoWipe will not apply a wipe before the configured `wipe_datetime`.
+- `run_wipe.sh` and `update_only.sh` use a lock file so update-only jobs and wipe jobs do not run at the same time.
+
+## Recent Hardening
+
+- Prevented duplicate same-day destructive wipe runs.
+- Fixed `server.seed` config rotation crash.
+- Moved final wipe state marking until after Rust save/map/BP files are deleted.
+- Added process locking to avoid overlapping cron jobs.
+- Wipe detection now respects the configured wipe time, not just the wipe date.

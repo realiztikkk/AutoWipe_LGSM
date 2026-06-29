@@ -43,15 +43,30 @@ def get_due_wipe(config: dict, target_datetime: str | None = None) -> dict | Non
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone)
 
-    today = now.date()
+    due_wipes = []
 
     for wipe in config["wipes"]:
+        wipe_timezone = ZoneInfo(wipe.get("timezone", config["timezone"]))
         wipe_time = datetime.fromisoformat(wipe["wipe_datetime"])
 
-        if wipe_time.date() == today:
-            return wipe
+        if wipe_time.tzinfo is None:
+            wipe_time = wipe_time.replace(tzinfo=wipe_timezone)
 
-    return None
+        now_in_wipe_timezone = now.astimezone(wipe_timezone)
+        wipe_time_in_wipe_timezone = wipe_time.astimezone(wipe_timezone)
+
+        same_wipe_date = (
+            now_in_wipe_timezone.date() == wipe_time_in_wipe_timezone.date()
+        )
+
+        if same_wipe_date and now_in_wipe_timezone >= wipe_time_in_wipe_timezone:
+            due_wipes.append((wipe_time_in_wipe_timezone, wipe))
+
+    if not due_wipes:
+        return None
+
+    due_wipes.sort(key=lambda item: item[0], reverse=True)
+    return due_wipes[0][1]
 
 
 def shell_quote_value(value: str | int) -> str:
@@ -445,6 +460,18 @@ def main() -> None:
         help="Show selected wipe without editing files"
     )
 
+    parser.add_argument(
+        "--skip-state",
+        action="store_true",
+        help="Apply config changes without writing state"
+    )
+
+    parser.add_argument(
+        "--mark-applied-only",
+        action="store_true",
+        help="Only write state for the selected wipe"
+    )
+
     args = parser.parse_args()
 
     config_path = Path(args.config).resolve()
@@ -463,9 +490,16 @@ def main() -> None:
     print(f"[INFO] Seed: {wipe['map']['seed']}")
     print(f"[INFO] World Size: {wipe['map']['worldsize']}")
 
-    if already_applied(config, wipe) and not args.force:
+    is_already_applied = already_applied(config, wipe)
+
+    if is_already_applied and not args.force:
         print("[INFO] This wipe has already been applied.")
         print("[INFO] Use --force to reapply.")
+        return
+
+    if args.mark_applied_only:
+        write_state(config, wipe)
+        print("[DONE] AutoWipe state marked applied.")
         return
 
     if args.dry_run:
@@ -488,7 +522,8 @@ def main() -> None:
 
     update_server_cfg(config, wipe)
 
-    write_state(config, wipe)
+    if not args.skip_state:
+        write_state(config, wipe)
 
     print("[DONE] AutoWipe config rotation complete.")
 
