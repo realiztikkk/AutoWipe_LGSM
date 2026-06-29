@@ -463,13 +463,13 @@ def main() -> None:
     print(f"[INFO] Seed: {wipe['map']['seed']}")
     print(f"[INFO] World Size: {wipe['map']['worldsize']}")
 
-    if args.dry_run:
-        print("[DRY RUN] No files changed.")
-        return
-
     if already_applied(config, wipe) and not args.force:
         print("[INFO] This wipe has already been applied.")
         print("[INFO] Use --force to reapply.")
+        return
+
+    if args.dry_run:
+        print("[DRY RUN] No files changed.")
         return
 
     backup_dir = Path(config["paths"]["backup_dir"])

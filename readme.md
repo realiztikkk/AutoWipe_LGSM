@@ -47,14 +47,16 @@ Rust AutoWipe is designed to be called by cron or systemd once per day near wipe
 Example wipe cron:
 
 ```cron
-5 11 * * * /opt/rust-autowipe/scripts/run_wipe.sh >> /opt/rust-autowipe/logs/cron.log 2>&1
+5 19 * * * /opt/rust-autowipe/scripts/run_wipe.sh >> /opt/rust-autowipe/logs/cron.log 2>&1
 ```
 
 The wipe script checks your configured wipe profiles.
 
 If today is not a wipe date, it exits safely.
 
-If today is a wipe date, it:
+If today is a wipe date that has already been applied, it exits safely without stopping the server or deleting files.
+
+If today is a new wipe date, it:
 
 1. Backs up server config and identity files.
 2. Stops the Rust server.
@@ -66,8 +68,8 @@ If today is a wipe date, it:
 8. Deletes Rust map/save/player/BP files.
 9. Starts the server.
 10. Waits for the server to boot.
-11. Runs configured RCON commands.
-12. Optionally runs a user-defined custom script.
+11. Optionally runs a user-defined custom script.
+12. Runs configured RCON commands.
 13. Writes state so the same wipe is not applied twice.
 
 Separate from wipe execution, `update_only.sh` performs scheduled Rust hotfix checks and Oxide/uMod updates without wiping the server.
@@ -86,20 +88,20 @@ Recommended cron after setup:
 
 ```cron
 # Keep server online
-*/5 * * * * /data1/rustserver monitor > /dev/null 2>&1
+*/5 * * * * /home/rustserver/rustserver monitor > /dev/null 2>&1
 
 # Rust hotfix updates + Oxide/uMod updates
 15 * * * * /opt/rust-autowipe/scripts/update_only.sh >> /opt/rust-autowipe/logs/update-only-cron.log 2>&1
 
 # Wipe-day automation
-5 11 * * * /opt/rust-autowipe/scripts/run_wipe.sh >> /opt/rust-autowipe/logs/cron.log 2>&1
+5 19 * * * /opt/rust-autowipe/scripts/run_wipe.sh >> /opt/rust-autowipe/logs/cron.log 2>&1
 ```
 
 Avoid duplicate update jobs like:
 
 ```cron
-1 * * * * /data1/rustserver update && /data1/rustserver mods-update
-0 12 * * * /data1/update_rust.sh
+1 * * * * /home/rustserver/rustserver update && /home/rustserver/rustserver mods-update
+0 12 * * * /home/rustserver/update_rust.sh
 ```
 
 Duplicate update jobs can conflict with wipe automation.
@@ -147,7 +149,7 @@ Important sections:
 "updates": {
   "rust_update_enabled": true,
   "oxide_update_enabled": true,
-  "lgsm_script": "/data1/rustserver"
+  "lgsm_script": "/home/rustserver/rustserver"
 }
 ```
 
@@ -179,7 +181,7 @@ A procedural wipe uses:
 ```json
 "map": {
   "type": "procedural",
-  "seed": 486053451,
+  "seed": 123456789,
   "worldsize": 4250,
   "customlevelurl": null
 }
@@ -278,7 +280,7 @@ python3 src/autowipe.py --config config/wipe_config.json --dry-run
 Test a specific wipe date:
 
 ```bash
-python3 src/autowipe.py --config config/wipe_config.json --target-datetime "2026-06-04T11:10:00-07:00" --dry-run
+python3 src/autowipe.py --config config/wipe_config.json --target-datetime "2026-07-02T19:10:00+00:00" --dry-run
 ```
 
 Test update-only mode:

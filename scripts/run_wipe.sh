@@ -199,6 +199,13 @@ detect_wipe() {
         exit 0
     fi
 
+    if grep -q "This wipe has already been applied" "$LOG_FILE"; then
+
+        log "This wipe has already been applied. Exiting without destructive actions."
+
+        exit 0
+    fi
+
     log "Wipe scheduled today."
 }
 

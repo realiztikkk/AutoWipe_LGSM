@@ -130,7 +130,7 @@ echo
 
 echo "3. Test a specific wipe date:"
 echo
-echo "   python3 src/autowipe.py --config config/wipe_config.json --target-datetime \"2026-06-04T11:10:00-07:00\" --dry-run"
+echo "   python3 src/autowipe.py --config config/wipe_config.json --target-datetime \"2026-07-02T19:10:00+00:00\" --dry-run"
 echo
 
 echo "4. Test hotfix/update-only mode:"
@@ -151,9 +151,9 @@ echo
 echo "Recommended cron:"
 echo
 
-echo "*/5 * * * * /data1/rustserver monitor > /dev/null 2>&1"
+echo "*/5 * * * * /home/rustserver/rustserver monitor > /dev/null 2>&1"
 echo "15 * * * * /opt/rust-autowipe/scripts/update_only.sh >> /opt/rust-autowipe/logs/update-only-cron.log 2>&1"
-echo "5 11 * * * /opt/rust-autowipe/scripts/run_wipe.sh >> /opt/rust-autowipe/logs/cron.log 2>&1"
+echo "5 19 * * * /opt/rust-autowipe/scripts/run_wipe.sh >> /opt/rust-autowipe/logs/cron.log 2>&1"
 
 echo
 echo "Rust AutoWipe is ready."
